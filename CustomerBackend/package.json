@@ -1,0 +1,12 @@
+{
+  "name": "customer-backend",
+  "version": "1.0.0",
+  "description": "Customer API Backend",
+  "scripts": {
+    "start": "cd CustomerAPI && dotnet run",
+    "build": "cd CustomerAPI && dotnet build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
