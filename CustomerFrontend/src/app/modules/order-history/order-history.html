@@ -1,0 +1,59 @@
+<div class="order-history-container">
+  @if (!getIsAuthenticated()) {
+    <div class="auth-required">
+      <h2>Please Login to Continue</h2>
+      <p>You need to be logged in to view your order history.</p>
+      <button (click)="navigateToLogin()" class="btn btn-primary">Login</button>
+    </div>
+  } @else {
+    <div class="order-history-header">
+      <h1>🛒 Order History</h1>
+      <div class="header-actions">
+        <button (click)="navigateToDashboard()" class="nav-btn">Back to Dashboard</button>
+        <button (click)="logout()" class="logout-btn">Logout</button>
+      </div>
+    </div>
+
+    <div class="api-error-message" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <div class="order-history-content">
+    <div class="order-history-section">
+      <h2>Last 5 Orders</h2>
+      <div class="order-history-list" *ngIf="!isLoading()">
+        @for(order of orderHistory(); track order.orderId) {
+          <div class="order-history-card" [class.expiring-soon]="isExpiringSoon(order.expiryDate)" [class.expired]="isExpired(order.expiryDate)">
+            <div class="order-info">
+              <h3>Order #{{ order.orderId }}</h3>
+              <p class="item-name">{{ order.itemName }}</p>
+              <p class="order-date">Order Date: {{ order.orderDate | date:'mediumDate' }}</p>
+              <p class="expiry-date">Expiry Date: {{ order.expiryDate | date:'mediumDate' }}</p>
+            </div>
+            <div class="order-status">
+              @if(isExpired(order.expiryDate)) {
+                <span class="status-badge expired">Expired</span>
+              } @else if(isExpiringSoon(order.expiryDate)) {
+                <span class="status-badge expiring-soon">Expiring Soon</span>
+              } @else {
+                <span class="status-badge active">Active</span>
+              }
+              @if(order.notificationSent) {
+                <p class="notification-sent">✓ Notification Sent</p>
+              } @else {
+                <p class="notification-pending">⏳ Notification Pending</p>
+              }
+            </div>
+          </div>
+        }
+      </div>
+      <div class="loading" *ngIf="isLoading()">
+        Loading order history...
+      </div>
+      <div class="no-orders" *ngIf="!isLoading() && orderHistory().length === 0">
+        No order history found
+      </div>
+    </div>
+  </div>
+  }
+</div>
