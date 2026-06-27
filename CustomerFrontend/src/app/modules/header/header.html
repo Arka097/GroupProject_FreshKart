@@ -1,0 +1,34 @@
+<header class="header">
+  <div class="header-container">
+    <div class="header-left">
+      <div class="logo" (click)="navigateToHome()">
+        <span class="logo-icon">🥬</span>
+        <span class="logo-text">FreshKart</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="search-bar">
+        <input type="text" placeholder="Search for groceries..." class="search-input">
+        <button class="search-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <nav class="nav-links">
+        <a (click)="navigateToHome()" class="nav-link">Home</a>
+        <a (click)="navigateToDashboard()" class="nav-link">Shop</a>
+        <a (click)="navigateToOrderHistory()" class="nav-link">Orders</a>
+      </nav>
+
+      <div class="auth-buttons">
+        <button *ngIf="isAuthenticated" (click)="logout()" class="btn btn-outline">Logout</button>
+      </div>
+    </div>
+  </div>
+</header>
